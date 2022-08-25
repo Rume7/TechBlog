@@ -24,6 +24,8 @@ public class Author {
     @Column(name="No_of_Articles")
     private int numberOfArticles;
 
+    public Author(){}
+
     public Author(String firstName, String lastName, String email, int numberOfArticles) {
         this.firstName = firstName;
         this.lastName = lastName;
