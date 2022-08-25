@@ -47,6 +47,6 @@ public class Author {
 
     @Override
     public String toString() {
-        return "Author{" + super.toString()  + "numberOfPublications=" + getNumberOfArticles() + '}';
+        return "Name: " + this.getName() + " # of articles: " + this.getNumberOfArticles();
     }
 }
