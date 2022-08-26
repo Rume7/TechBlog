@@ -16,7 +16,7 @@ public class AuthorService {
     public List<Author> getAllAuthors() {
         return authorRepository.findAll();
     }
-    
+
     public Author getAnAuthorByEmail(String email) {
         return authorRepository.findAll().stream()
                 .filter(author -> author.getEmail().equals(email))
