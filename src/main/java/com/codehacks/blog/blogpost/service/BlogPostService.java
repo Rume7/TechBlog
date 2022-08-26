@@ -16,6 +16,10 @@ public class BlogPostService {
     @Autowired
     private BlogPostRepository blogPostRepository;
 
+    public void createABlogPost(BlogPost blogPost) {
+        blogPostRepository.save(blogPost);
+    }
+
     public List<BlogPost> getBlogPostByTitle(String title) {
         List<BlogPost> allPosts = blogPostRepository.findAll().stream()
                 .filter(blog -> blog.getPost().equals(title))
@@ -60,5 +64,13 @@ public class BlogPostService {
                 .filter(blog -> blog.getDateOfPost().after(startDate))
                 .filter(blog -> blog.getDateOfPost().before(endDate))
                 .collect(Collectors.toList());
+    }
+
+    public void updateBlogContent(BlogPost blogPost) {
+        // blogPostRepository
+    }
+
+    public void deleteABlogPost(String title) {
+        blogPostRepository.deleteBlogPostByTitle(title);
     }
 }
