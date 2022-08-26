@@ -61,5 +61,8 @@ public class BlogPost {
         return Objects.hash(title, post, author);
     }
 
-
+    @Override
+    public String toString() {
+        return "BlogPost{" + "title='" + title + '\'' + '}';
+    }
 }
