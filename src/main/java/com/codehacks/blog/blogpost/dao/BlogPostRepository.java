@@ -9,5 +9,5 @@ import org.springframework.stereotype.Repository;
 public interface BlogPostRepository extends JpaRepository<BlogPost, Long> {
 
     @Query("SELECT b FROM Blog_Post b WHERE b.title = ?1")
-    public void deleteBlogPostByTitle(String title);
+    void deleteBlogPostByTitle(String title);
 }

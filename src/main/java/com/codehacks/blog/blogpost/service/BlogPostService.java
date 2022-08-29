@@ -27,7 +27,7 @@ public class BlogPostService {
         return allPosts;
     }
 
-    public List<BlogPost> getBlogPostsByAuthor(Author author){
+    public List<BlogPost> getBlogPostsByAuthor(Author author) {
         List<BlogPost> allPosts = blogPostRepository.findAll().stream()
                 .filter(blog -> blog.getAuthor().equals(author))
                 .collect(Collectors.toList());
@@ -40,7 +40,7 @@ public class BlogPostService {
                 .collect(Collectors.toList());
     }
 
-    public List<BlogPost> getBlogPostsBetweenDates(Date start, Date end){
+    public List<BlogPost> getBlogPostsBetweenDates(Date start, Date end) {
         return blogPostRepository.findAll().stream()
                 .filter(blog -> blog.getDateOfPost().after(start))
                 .filter(blog -> blog.getDateOfPost().before(end))

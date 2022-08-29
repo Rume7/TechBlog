@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(path="api/v1/blog")
+@RequestMapping(path = "api/v1/blog")
 public class BlogPostController {
 
     @Autowired
@@ -18,7 +18,7 @@ public class BlogPostController {
         this.blogPostService = blogPostService;
     }
 
-    @PostMapping(path="/create_post")
+    @PostMapping(path = "/create_post")
     public void createBlogPost(@RequestBody BlogPost blogPost) {
         this.blogPostService.createABlogPost(blogPost);
     }
