@@ -1,6 +1,6 @@
 package com.codehacks.blog.registration.service;
 
-import com.codehacks.blog.registration.controller.dao.RegistrationRepository;
+import com.codehacks.blog.registration.dao.RegistrationRepository;
 import com.codehacks.blog.registration.entities.Registration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
