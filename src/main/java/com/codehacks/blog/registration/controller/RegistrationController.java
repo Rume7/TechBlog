@@ -1,5 +1,6 @@
 package com.codehacks.blog.registration.controller;
 
+import com.codehacks.blog.registration.controller.utility.MyPasswordEncoder;
 import com.codehacks.blog.registration.entities.Registration;
 import com.codehacks.blog.registration.service.RegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,12 +12,19 @@ public class RegistrationController {
     @Autowired
     private RegistrationService registrationService;
 
-    private Registration registerUser(Registration newUser) {
-        // Check if the user is in the database
-        // if true, send message back to the registration page notifying of existing login or email already taken
-        // else register the user.
-        // Convert password to hashedPassword before committing to database.
+    @Autowired
+    private MyPasswordEncoder passwordEncoder;
 
+    private Registration registerUser(Registration newUser) throws IllegalArgumentException {
+        // Check if password equals confirm password
+        if (newUser.getPassword().equals(newUser.getConfirmPassword())) {
+            // Check if the user is in the database
+            // if true, send message back to the registration page notifying of existing login or email already taken
+            // else register the user.
+            // Convert password to hashedPassword before committing to database.
+
+            String hashedPassword = passwordEncoder.encode(newUser.getPassword());
+        }
         return null;
     }
 
