@@ -9,5 +9,5 @@ import org.springframework.stereotype.Repository;
 public interface RegistrationRepository extends JpaRepository<Registration, Long> {
 
     @Query("SELECT r FROM Registration r WHERE r.email=?1")
-    public Registration findUserByEmail(String email);
+    Registration findUserByEmail(String email);
 }

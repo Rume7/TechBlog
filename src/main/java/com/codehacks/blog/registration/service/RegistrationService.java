@@ -1,5 +1,6 @@
 package com.codehacks.blog.registration.service;
 
+import com.codehacks.blog.registration.controller.utility.MyPasswordEncoder;
 import com.codehacks.blog.registration.dao.RegistrationRepository;
 import com.codehacks.blog.registration.entities.Registration;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,28 @@ public class RegistrationService {
         throw new IllegalArgumentException("The user already exists");
     }
 
+    public Registration updateUserProfile(Registration user) {
+        Registration registrant = registrationRepository.findUserByEmail(user.getEmail());
+        if (registrant != null) {
+            registrant.setFirstName(user.getFirstName());
+            registrant.setLastName(user.getLastName());
+            registrant.setPassword(user.getPassword());
+            registrant.setUsername(user.getUsername());
+            registrationRepository.save(registrant);
+        }
+        throw new IllegalArgumentException("User " + user.getEmail() + " doesn't exist.");
+    }
+
+    @Transactional
+    public boolean changePassword(String email, String newPassword) {
+        Registration registeredUser = registrationRepository.findUserByEmail(email);
+        if(registeredUser != null) {
+            String encodedPassword = new MyPasswordEncoder().encode(newPassword);
+            registeredUser.setPassword(encodedPassword);
+            return true;
+        }
+        return false;
+    }
 
     @Transactional
     public boolean delete(Registration user) {
