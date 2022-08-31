@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 public class RegistrationService {
 
@@ -21,6 +23,10 @@ public class RegistrationService {
             return newUser;
         }
         throw new IllegalArgumentException("The user already exists");
+    }
+
+    public List<Registration> getAllRegisteredUsers() {
+        return registrationRepository.findAll();
     }
 
     public Registration updateUserProfile(Registration user) {
