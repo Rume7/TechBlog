@@ -29,6 +29,10 @@ public class RegistrationService {
         return registrationRepository.findAll();
     }
 
+    public Registration getARegisteredUser(String email) {
+        return registrationRepository.findUserByEmail(email);
+    }
+
     public Registration updateUserProfile(Registration user) {
         Registration registrant = registrationRepository.findUserByEmail(user.getEmail());
         if (registrant != null) {

@@ -4,9 +4,14 @@ import com.codehacks.blog.registration.controller.utility.MyPasswordEncoder;
 import com.codehacks.blog.registration.entities.Registration;
 import com.codehacks.blog.registration.service.RegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.stream.Collectors;
 
 @Controller
+@Transactional
 public class RegistrationController {
 
     @Autowired
@@ -15,33 +20,41 @@ public class RegistrationController {
     @Autowired
     private MyPasswordEncoder passwordEncoder;
 
-    private Registration registerUser(Registration newUser) throws IllegalArgumentException {
-        // Check if password equals confirm password
-        //if (newUser.getPassword().equals(newUser.getConfirmPassword())) {
-            // Check if the user is in the database
-            // if true, send message back to the registration page notifying of existing login or email already taken
-            // else register the user.
-            // Convert password to hashedPassword before committing to database.
-
+    public Registration registerUser(final Registration newUser) throws IllegalArgumentException {
+        if (!checkIfUserExist(newUser)) {
             String hashedPassword = passwordEncoder.encode(newUser.getPassword());
-        //}
-        return null;
+            newUser.setPassword(hashedPassword);
+            registrationService.registerUser(newUser);
+        }
+        throw new IllegalArgumentException("Already existing user");
     }
 
     public Registration updateUser(Registration user) {
-        // Check if the user is in the database.
-        // If Yes, update the database
-        // else throw exception
-
+        if (checkIfUserExist(user)) {
+            Registration newUser = new Registration();
+            newUser.setEmail(user.getEmail());
+            newUser.setUsername(user.getUsername());
+            newUser.setFirstName(user.getFirstName());
+            newUser.setLastName(user.getLastName());
+            newUser.setId(user.getId());
+            registrationService.updateUserProfile(newUser);
+        }
         return null;
     }
 
-    public boolean deleteUser(String email) {
-        // Check if user exists
-        // If true, delete user and return true
-        // else return false
-        //Registration user = registrationService.findUserByEmail(email);
-        //registrationService.delete(user);
-        return true;
+    public boolean deleteAccount(String email) {
+        Registration regUser = registrationService.getARegisteredUser(email);
+        if (regUser != null) {
+            registrationService.delete(regUser);
+            return true;
+        }
+        return false;
+    }
+
+    private boolean checkIfUserExist(@NonNull Registration user) {
+        return registrationService.getAllRegisteredUsers().parallelStream()
+                .filter(each -> user.getEmail().equals(each.getEmail()))
+                .filter(aUser -> user.getPassword().equals(aUser.getPassword()))
+                .collect(Collectors.toList()).size() == 1;
     }
 }
