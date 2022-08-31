@@ -23,6 +23,8 @@ public class BlogPost {
     private String content;
     private LocalDate dateCreated;
 
+    @ManyToOne
+    @JoinColumn(name = "Author_id")
     private List<Author> authors;
 
 }
