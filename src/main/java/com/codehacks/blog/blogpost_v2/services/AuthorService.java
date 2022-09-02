@@ -1,7 +1,7 @@
-package com.codehacks.blog.blogpost.service;
+package com.codehacks.blog.blogpost_v2.services;
 
-import com.codehacks.blog.blogpost.dao.AuthorRepository;
-import com.codehacks.blog.blogpost.entities.Author;
+import com.codehacks.blog.blogpost_v2.models.Author;
+import com.codehacks.blog.blogpost_v2.repositories.AuthorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,9 +25,7 @@ public class AuthorService {
 
     public Integer getAuthorsNumberOfPublications(Author author) {
         if (getAllAuthors().contains(author)) {
-            return authorRepository.findAll().stream()
-                    .filter(writer -> writer.getEmail().equals(author.getEmail()))
-                    .findFirst().get().getNumberOfArticles();
+            return authorRepository.getNumberOfArticlesOfAnAuthor(author);
         }
         throw new IllegalArgumentException("");
     }
