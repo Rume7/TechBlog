@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "RegisteredUser")
@@ -17,11 +18,21 @@ public class Registration {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @NotBlank
+    private String email;
+
+    @NotBlank
+    private String username;
+
     @Column(length = 65, nullable = false)
     private String password;
-    private String email;
-    private String username;
+
+    @NotBlank
     private String firstName;
+
+    @NotBlank
     private String lastName;
+
+    
 
 }
