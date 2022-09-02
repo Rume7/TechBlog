@@ -4,9 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
@@ -17,6 +15,7 @@ import java.util.Date;
 public class Comment {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long comment_id;
     private String comment;
     private Date dateCreatedComment;

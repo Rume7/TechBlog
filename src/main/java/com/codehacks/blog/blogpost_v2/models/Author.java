@@ -1,21 +1,18 @@
 package com.codehacks.blog.blogpost_v2.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
-@Table(name = "Author")
+@Table(name = "Authors")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class Author {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String firstName;
     private String lastName;
