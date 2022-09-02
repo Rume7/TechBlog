@@ -21,6 +21,8 @@ public class Author {
     @NotBlank(message = "Enter the Author's last name")
     private String lastName;
 
+    private String email;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "blogpost_id")
     private BlogPost post;
@@ -29,4 +31,9 @@ public class Author {
         this.firstName = firstName;
         this.lastName = lastName;
     }
+
+    public String getEmail() {
+        return email;
+    }
+
 }
