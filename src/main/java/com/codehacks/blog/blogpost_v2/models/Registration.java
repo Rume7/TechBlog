@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.time.Instant;
 
 @Entity
 @Table(name = "RegisteredUser")
@@ -25,6 +26,7 @@ public class Registration {
     private String username;
 
     @Column(length = 65, nullable = false)
+    @NotBlank
     private String password;
 
     @NotBlank
@@ -33,6 +35,6 @@ public class Registration {
     @NotBlank
     private String lastName;
 
-    
+    private Instant createdDate;
 
 }
