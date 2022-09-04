@@ -1,4 +1,4 @@
-package com.codehacks.blog.check.registration.entities;
+package com.codehacks.check.registration.entities;
 
 import javax.persistence.*;
 import java.util.Objects;

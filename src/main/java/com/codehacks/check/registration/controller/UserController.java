@@ -1,4 +1,4 @@
-package com.codehacks.blog.check.registration.controller;
+package com.codehacks.check.registration.controller;
 
 import org.springframework.stereotype.Controller;
 

@@ -1,8 +1,8 @@
-package com.codehacks.blog.check.registration.controller;
+package com.codehacks.check.registration.controller;
 
-import com.codehacks.blog.check.registration.entities.Registration;
-import com.codehacks.blog.check.registration.service.RegistrationService;
-import com.codehacks.blog.check.registration.controller.utility.MyPasswordEncoder;
+import com.codehacks.check.registration.entities.Registration;
+import com.codehacks.check.registration.service.RegistrationService;
+import com.codehacks.check.registration.controller.utility.MyPasswordEncoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Controller;

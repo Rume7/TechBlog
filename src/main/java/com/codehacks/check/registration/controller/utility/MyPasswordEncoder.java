@@ -1,4 +1,4 @@
-package com.codehacks.blog.check.registration.controller.utility;
+package com.codehacks.check.registration.controller.utility;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

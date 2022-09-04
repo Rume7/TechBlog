@@ -1,7 +1,7 @@
-package com.codehacks.blog.check.registration.controller;
+package com.codehacks.check.registration.controller;
 
-import com.codehacks.blog.check.registration.entities.LoginUser;
-import com.codehacks.blog.check.registration.service.LoginService;
+import com.codehacks.check.registration.entities.LoginUser;
+import com.codehacks.check.registration.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;

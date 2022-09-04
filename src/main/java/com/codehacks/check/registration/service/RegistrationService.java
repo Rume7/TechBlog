@@ -1,8 +1,8 @@
-package com.codehacks.blog.check.registration.service;
+package com.codehacks.check.registration.service;
 
-import com.codehacks.blog.check.registration.controller.utility.MyPasswordEncoder;
-import com.codehacks.blog.check.registration.dao.RegistrationRepository;
-import com.codehacks.blog.check.registration.entities.Registration;
+import com.codehacks.check.registration.controller.utility.MyPasswordEncoder;
+import com.codehacks.check.registration.dao.RegistrationRepository;
+import com.codehacks.check.registration.entities.Registration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
