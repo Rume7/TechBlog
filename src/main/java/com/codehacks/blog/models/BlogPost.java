@@ -21,7 +21,7 @@ public class BlogPost {
     @NotBlank(message = "Input the Title")
     private String title;
 
-    @NotBlank(message = "Blog content is required")
+    @NotBlank(message = "Content is required")
     private String content;
 
     private Instant dateCreated;
@@ -34,14 +34,21 @@ public class BlogPost {
 
     public BlogPost(String title) {
         this.title = title;
+        this.content = "";
+        this.dateCreated = Instant.now();
+        this.authors = new ArrayList<>();
+        this.comments = new ArrayList<>();
     }
 
-    public BlogPost(String title, String content, Instant dateCreated, List<Author> authors) {
+    public BlogPost(final String title, final String content, final List<Author> authors) {
         this.title = title;
         this.content = content;
         this.dateCreated = Instant.now();
-        this.authors = authors;
         this.comments = new ArrayList<>();
+        this.authors = new ArrayList<>();
+        for (Author author : authors) {
+            this.authors.add(author);
+        }
     }
 
     @Override
