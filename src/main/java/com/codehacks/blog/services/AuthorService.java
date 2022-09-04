@@ -17,16 +17,21 @@ public class AuthorService {
         return authorRepository.findAll();
     }
 
-    public Author getAnAuthorByEmail(String email) {
-        return authorRepository.findAll().stream()
+    public Author getAuthorByEmail(String email) {
+        return authorRepository.findAll().parallelStream()
                 .filter(author -> author.getEmail().equals(email))
                 .findFirst().orElse(null);
     }
 
     public Integer getAuthorsNumberOfPublications(Author author) {
-        if (getAllAuthors().contains(author)) {
-            return authorRepository.getNumberOfArticlesOfAnAuthor(author);
+        Author foundAuthor = getAuthorByEmail(author.getEmail());
+        if (foundAuthor != null) {
+            String firstName = foundAuthor.getFirstName();
+            String lastName = foundAuthor.getLastName();
+            if (firstName.equals(author.getFirstName()) && lastName.equals(author.getLastName())) {
+                return authorRepository.getNumberOfArticlesOfAnAuthor(foundAuthor.getId());
+            }
         }
-        throw new IllegalArgumentException("");
+        throw new IllegalArgumentException("Author not found");
     }
 }
