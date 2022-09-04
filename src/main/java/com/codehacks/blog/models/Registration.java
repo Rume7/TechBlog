@@ -5,14 +5,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.validation.constraints.NotBlank;
 import java.time.Instant;
 
 @Entity
 @Table(name = "RegisteredUser")
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 public class Registration {
 
     @Id
@@ -37,4 +36,16 @@ public class Registration {
 
     private Instant createdDate;
 
+    public Registration(){
+        this.createdDate = Instant.now();
+    }
+
+    public Registration(String email, String username, String password, String firstName, String lastName) {
+        this.email = email;
+        this.username = username;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.createdDate = Instant.now();
+    }
 }
