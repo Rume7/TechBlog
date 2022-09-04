@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface AuthorRepository extends JpaRepository<Author, Long> {
-    
+
     @Query("SELECT COUNT(b) FROM Blogpost b WHERE b.author_id=?1")
     public Integer getNumberOfArticlesOfAnAuthor(Long authorId);
 
