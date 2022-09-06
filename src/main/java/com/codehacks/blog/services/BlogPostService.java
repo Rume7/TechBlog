@@ -35,7 +35,7 @@ public class BlogPostService {
 
     public List<BlogPost> getBlogPostsByAuthor(Author author) {
         List<BlogPost> allPosts = blogPostRepository.findAll().parallelStream()
-                .filter(blog -> blog.getAuthors().equals(author))
+                .filter(blog -> blog.getAuthor().equals(author))
                 .collect(Collectors.toList());
         return allPosts;
     }
@@ -60,7 +60,7 @@ public class BlogPostService {
     public List<BlogPost> getAllBlogPostsByAuthorAndDate(Author author, Date startDate) {
         Instant currentDate = startDate.toInstant();
         return blogPostRepository.findAll().parallelStream()
-                .filter(post -> post.getAuthors().equals(author))
+                .filter(post -> post.getAuthor().equals(author))
                 .filter(blog -> blog.getDateCreated().compareTo(currentDate) == 0)
                 .collect(Collectors.toList());
     }
@@ -69,7 +69,7 @@ public class BlogPostService {
         Instant start = startDate.toInstant();
         Instant end = startDate.toInstant();
         return blogPostRepository.findAll().parallelStream()
-                .filter(post -> post.getAuthors().equals(author))
+                .filter(post -> post.getAuthor().equals(author))
                 .filter(blog -> blog.getDateCreated().isAfter(start))
                 .filter(blog -> blog.getDateCreated().isBefore(end))
                 .collect(Collectors.toList());

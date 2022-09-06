@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +12,9 @@ import java.util.Objects;
 
 @Entity
 @Table(name="Posts")
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
 public class BlogPost {
 
     @Id
@@ -19,34 +22,28 @@ public class BlogPost {
     private Long id;
 
     @NotBlank(message = "Input the Title")
+    @NotNull
     private String title;
 
     @NotBlank(message = "Content is required")
+    @NotNull
     private String content;
 
     private Instant dateCreated;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    private Author authors;
+    @OneToOne
+    @NotNull
+    private Author author;
 
     @OneToMany()
     private List<Comment> comments;
-
-    public BlogPost(){}
-
-    public BlogPost(String title) {
-        this.title = title;
-        this.content = "";
-        this.dateCreated = Instant.now();
-        this.comments = new ArrayList<>();
-    }
 
     public BlogPost(final String title, final String content, final Author author) {
         this.title = title;
         this.content = content;
         this.dateCreated = Instant.now();
+        this.author = author;
         this.comments = new ArrayList<>();
-        this.authors = author;
     }
 
     @Override
