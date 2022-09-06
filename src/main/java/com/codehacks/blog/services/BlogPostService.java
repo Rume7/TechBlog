@@ -2,6 +2,7 @@ package com.codehacks.blog.services;
 
 import com.codehacks.blog.models.Author;
 import com.codehacks.blog.models.BlogPost;
+import com.codehacks.blog.repositories.AuthorRepository;
 import com.codehacks.blog.repositories.BlogPostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,8 +19,13 @@ public class BlogPostService {
     @Autowired
     private BlogPostRepository blogPostRepository;
 
+    @Autowired
+    private AuthorRepository authorRepository;
+
     @Transactional
     public void createABlogPost(BlogPost blogPost) {
+        Author author1 = blogPost.getAuthor();
+        authorRepository.save(author1);
         blogPostRepository.save(blogPost);
     }
 

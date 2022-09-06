@@ -23,6 +23,7 @@ public interface BlogPostRepository extends JpaRepository<BlogPost, Long> {
 
     // TODO: Think of search a Blog repository using the title, date and author parameters.
 
+    /*
     @Query()
     public List<BlogPost> getBlogPostByTitle(String title);
 
@@ -31,4 +32,6 @@ public interface BlogPostRepository extends JpaRepository<BlogPost, Long> {
 
     @Query()
     public List<BlogPost> getBlogPostByAuthor(Author author);
+
+     */
 }

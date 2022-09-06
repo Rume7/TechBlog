@@ -29,6 +29,7 @@ public class BlogPost {
     @NotNull
     private String content;
 
+    @NotNull
     private Instant dateCreated;
 
     @OneToOne

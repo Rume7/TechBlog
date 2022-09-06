@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 @Entity
@@ -16,17 +17,21 @@ public class Author {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @NotBlank(message = "Enter the Author's first name")
+    @NotBlank(message = "Enter Author's first name")
     private String firstName;
 
-    @NotBlank(message = "Enter the Author's last name")
+    @NotBlank(message = "Enter Author's last name")
+    @NotNull
     private String lastName;
 
+    @NotBlank(message = "Enter Author's email")
+    @NotNull
     private String email;
 
-    public Author(String firstName, String lastName) {
+    public Author(String firstName, String lastName, String email) {
         this.firstName = firstName;
         this.lastName = lastName;
+        this.email = email;
     }
 
     @Override
