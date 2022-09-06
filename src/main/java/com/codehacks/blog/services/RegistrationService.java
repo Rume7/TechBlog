@@ -3,7 +3,6 @@ package com.codehacks.blog.services;
 import com.codehacks.blog.models.Registration;
 import com.codehacks.blog.repositories.RegistrationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,9 +11,6 @@ public class RegistrationService {
 
     @Autowired
     private RegistrationRepository registrationRepository;
-
-    @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Transactional
     public void registerNewUser(Registration registration) {

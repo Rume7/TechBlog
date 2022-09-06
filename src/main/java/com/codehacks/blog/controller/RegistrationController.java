@@ -5,6 +5,7 @@ import com.codehacks.blog.services.RegistrationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,8 +23,10 @@ public class RegistrationController {
     @Autowired
     private RegistrationService registrationService;
 
-    @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
     @PostMapping(value = "/register")
     public String processRegister(@Valid Registration registration, BindingResult result, Model model) {
@@ -31,7 +34,7 @@ public class RegistrationController {
             return "registerUser";
         }
         logger.info("Request to REGISTER user " + registration.getUsername());
-        String hashedPassword = bCryptPasswordEncoder.encode(registration.getPassword());
+        String hashedPassword = passwordEncoder().encode(registration.getPassword());
         registration.setCreatedDate(Instant.now());
         registration.setPassword(hashedPassword);
         registrationService.registerNewUser(registration);
@@ -52,7 +55,7 @@ public class RegistrationController {
         updatedProfile.setEmail(registration.getEmail());
         updatedProfile.setFirstName(registration.getFirstName());
         updatedProfile.setLastName(registration.getLastName());
-        updatedProfile.setPassword(registration.getPassword());
+        updatedProfile.setPassword(passwordEncoder().encode(registration.getPassword()));
         registrationService.updateExistingUserProfile(updatedProfile);
         return "redirect:/index";
     }

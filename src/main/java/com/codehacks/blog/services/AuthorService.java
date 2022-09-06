@@ -23,6 +23,7 @@ public class AuthorService {
                 .findFirst().orElse(null);
     }
 
+    /*
     public Integer getAuthorsNumberOfPublications(Author author) {
         Author foundAuthor = getAuthorByEmail(author.getEmail());
         if (foundAuthor != null) {
@@ -33,5 +34,5 @@ public class AuthorService {
             }
         }
         throw new IllegalArgumentException("Author not found");
-    }
+    }*/
 }

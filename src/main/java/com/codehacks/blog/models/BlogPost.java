@@ -26,29 +26,27 @@ public class BlogPost {
 
     private Instant dateCreated;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "blogpost")
-    private List<Author> authors;
+    @OneToOne(fetch = FetchType.LAZY)
+    private Author authors;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "blogpost")
+    @OneToMany()
     private List<Comment> comments;
+
+    public BlogPost(){}
 
     public BlogPost(String title) {
         this.title = title;
         this.content = "";
         this.dateCreated = Instant.now();
-        this.authors = new ArrayList<>();
         this.comments = new ArrayList<>();
     }
 
-    public BlogPost(final String title, final String content, final List<Author> authors) {
+    public BlogPost(final String title, final String content, final Author author) {
         this.title = title;
         this.content = content;
         this.dateCreated = Instant.now();
         this.comments = new ArrayList<>();
-        this.authors = new ArrayList<>();
-        for (Author author : authors) {
-            this.authors.add(author);
-        }
+        this.authors = author;
     }
 
     @Override

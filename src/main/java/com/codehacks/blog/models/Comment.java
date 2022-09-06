@@ -25,10 +25,6 @@ public class Comment {
     @NotBlank
     private String commenterName;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "blogpost_id")
-    private Long blog_id;
-
     public Comment(String comment, String commenterName) {
         this.comment = comment;
         this.dateCreatedComment = Instant.now();

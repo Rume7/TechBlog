@@ -27,14 +27,15 @@ public class BlogPostService {
         return blogPostRepository.findAll();
     }
 
+    /*
     public BlogPost getBlogPostByTitle(String title) {
         BlogPost allPosts = blogPostRepository.getBlogPostByTitle(title);
         return allPosts;
-    }
+    }*/
 
     public List<BlogPost> getBlogPostsByAuthor(Author author) {
         List<BlogPost> allPosts = blogPostRepository.findAll().parallelStream()
-                .filter(blog -> blog.getAuthors().contains(author))
+                .filter(blog -> blog.getAuthors().equals(author))
                 .collect(Collectors.toList());
         return allPosts;
     }
@@ -59,7 +60,7 @@ public class BlogPostService {
     public List<BlogPost> getAllBlogPostsByAuthorAndDate(Author author, Date startDate) {
         Instant currentDate = startDate.toInstant();
         return blogPostRepository.findAll().parallelStream()
-                .filter(post -> post.getAuthors().contains(author))
+                .filter(post -> post.getAuthors().equals(author))
                 .filter(blog -> blog.getDateCreated().compareTo(currentDate) == 0)
                 .collect(Collectors.toList());
     }
@@ -68,12 +69,13 @@ public class BlogPostService {
         Instant start = startDate.toInstant();
         Instant end = startDate.toInstant();
         return blogPostRepository.findAll().parallelStream()
-                .filter(post -> post.getAuthors().contains(author))
+                .filter(post -> post.getAuthors().equals(author))
                 .filter(blog -> blog.getDateCreated().isAfter(start))
                 .filter(blog -> blog.getDateCreated().isBefore(end))
                 .collect(Collectors.toList());
     }
 
+    /*
     @Transactional
     public void updateBlogContent(BlogPost blogPost) {
         BlogPost bgPost = blogPostRepository.getBlogPostByTitle(blogPost.getTitle());
@@ -87,5 +89,5 @@ public class BlogPostService {
 
     public void deleteABlogPost(String title) {
         blogPostRepository.deleteBlogPostByTitle(title);
-    }
+    }*/
 }
