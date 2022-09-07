@@ -34,13 +34,18 @@ public class BlogPostDataLoader implements CommandLineRunner {
             Comment comment1 = new Comment("Your application runs well", "Gary Smith");
             Comment comment2 = new Comment("Your application needs a change.", "Susan Boyle");
             List<Comment> commentList1 = List.of(comment1, comment2);
-
             BlogPost post1 = new BlogPost("Concurrency", "Learning multithreading",
                     new Author("Wale", "Thompson", "walethompson@gmail.com"));
             post1.setComments(commentList1);
 
+
+            Comment comment3 = new Comment("Review your system design.", "Glen Abey");
+            Comment comment4 = new Comment("Let's do pair programming.", "Sandra Clark");
+            List<Comment> commentList2 = List.of(comment3, comment4);
             BlogPost post2 = new BlogPost("Threads", "coding threads in java 6",
                     new Author("Sally", "Graham", "sally_graham@gmail.com"));
+            post2.setComments(commentList2);
+
 
             BlogPost post3 = new BlogPost("Itext", "programming in pdf",
                     new Author("Barry", "White", "barry@yahoo.com"));
@@ -50,6 +55,8 @@ public class BlogPostDataLoader implements CommandLineRunner {
 
             commentRepository.save(comment1);
             commentRepository.save(comment2);
+            commentRepository.save(comment3);
+            commentRepository.save(comment4);
 
             blogPostService.createABlogPost(post1);
             blogPostService.createABlogPost(post2);
