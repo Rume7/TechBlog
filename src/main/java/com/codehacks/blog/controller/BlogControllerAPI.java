@@ -36,4 +36,11 @@ public class BlogControllerAPI {
         final BlogPost blogPost = blogPostService.getBlogPostByTitle(title);
         return blogPost == null ? null : blogPost;
     }
+
+    @PutMapping
+    public BlogPost updatePost(@RequestBody BlogPost post) {
+        logger.info("Request to UPDATE a blog post titled: " + post.getTitle());
+        blogPostService.updateBlogContent(post);
+        return blogPostService.getBlogPostByTitle(post.getTitle());
+    }
 }
