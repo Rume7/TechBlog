@@ -6,13 +6,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController("api/v1/blog")
+@RestController
+@RequestMapping("api/v1/blog")
 public class BlogControllerAPI {
 
     private final Logger logger = LoggerFactory.getLogger(BlogControllerAPI.class);
@@ -23,24 +22,18 @@ public class BlogControllerAPI {
     // TODO: Implemented CRUD methods
     // TODO DONE:  READ,
 
-    @GetMapping("/all_posts")
-    public List<BlogPost> getAllBlogPost(Model model) {
+    @GetMapping(value = "/all_posts", produces = "application/json")
+    public List<BlogPost> getAllBlogPost() {
         logger.info("Request to Get all Blog posts");
         List<BlogPost> allPosts = blogPostService.getAllBlogPosts();
-        model.addAttribute("allPosts", allPosts);
+        //model.addAttribute("allPosts", allPosts);
         return blogPostService.getAllBlogPosts();
-
     }
 
-    @GetMapping("/posts/title")
-    public BlogPost getPost(@PathVariable("title") String title, Model model) {
-        /*
-        BlogPost post = blogPostService.getBlogPostByTitle(title);
-        model.addAttribute("aPost", post);
-        return post;
-         */
-        return null;
+    @GetMapping(value = "/posts", produces = "application/json")
+    public BlogPost getPost(@RequestParam String title, Model model) {
+        logger.info("Request to Get a blog post titled: " + title);
+        final BlogPost blogPost = blogPostService.getBlogPostByTitle(title);
+        return blogPost == null ? null : blogPost;
     }
-
-
 }
