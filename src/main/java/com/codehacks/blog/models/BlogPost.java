@@ -36,7 +36,7 @@ public class BlogPost {
     @NotNull
     private Author author;
 
-    @OneToMany()
+    @OneToMany
     private List<Comment> comments;
 
     public BlogPost(final String title, final String content, final Author author) {
