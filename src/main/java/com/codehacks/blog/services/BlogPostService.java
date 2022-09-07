@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.Instant;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -30,15 +31,14 @@ public class BlogPostService {
     }
 
     public List<BlogPost> getAllBlogPosts() {
-        return blogPostRepository.findAll().stream().toList();
+        return blogPostRepository.findAll();
     }
 
-    public List<BlogPost> getBlogPostByTitle(String title) {
-        List<BlogPost> allPosts = getAllBlogPosts().parallelStream()
+    public BlogPost getBlogPostByTitle(String title) {
+        Optional<BlogPost> aPost = getAllBlogPosts().stream()
                 .filter(post -> post.getTitle().equalsIgnoreCase(title))
-                .sorted()
-                .collect(Collectors.toList());
-        return allPosts;
+                .findAny();
+        return aPost.orElse(new BlogPost());
     }
 
     public List<BlogPost> getBlogPostsByAuthor(Author author) {
@@ -91,11 +91,7 @@ public class BlogPostService {
 
     @Transactional
     public void updateBlogContent(BlogPost blogPost) {
-        BlogPost bgPost = getBlogPostByTitle(blogPost.getTitle())
-                            .stream()
-                            .filter(author -> blogPost.getAuthor().equals(author))
-                            .findFirst()
-                            .get();
+        BlogPost bgPost = getBlogPostByTitle(blogPost.getTitle());
         if (bgPost != null) {
             bgPost.setContent(blogPost.getContent());
             bgPost.setAuthor(blogPost.getAuthor());
@@ -105,7 +101,7 @@ public class BlogPostService {
     }
 
     public void deleteABlogPost(String title) {
-        BlogPost post = getBlogPostByTitle(title).stream().findAny().orElse(null);
+        BlogPost post = getBlogPostByTitle(title);
         if(post != null) {
             blogPostRepository.delete(post);
         }
