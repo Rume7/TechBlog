@@ -30,70 +30,84 @@ public class BlogPostService {
     }
 
     public List<BlogPost> getAllBlogPosts() {
-        return blogPostRepository.findAll();
+        return blogPostRepository.findAll().stream().toList();
     }
 
-    /*
-    public BlogPost getBlogPostByTitle(String title) {
-        BlogPost allPosts = blogPostRepository.getBlogPostByTitle(title);
+    public List<BlogPost> getBlogPostByTitle(String title) {
+        List<BlogPost> allPosts = getAllBlogPosts().parallelStream()
+                .filter(post -> post.getTitle().equalsIgnoreCase(title))
+                .sorted()
+                .collect(Collectors.toList());
         return allPosts;
-    }*/
+    }
 
     public List<BlogPost> getBlogPostsByAuthor(Author author) {
-        List<BlogPost> allPosts = blogPostRepository.findAll().parallelStream()
+        List<BlogPost> allPosts = getAllBlogPosts().parallelStream()
                 .filter(blog -> blog.getAuthor().equals(author))
+                .sorted()
                 .collect(Collectors.toList());
         return allPosts;
     }
 
     public List<BlogPost> getBlogPostByDate(Date dateOfPost) {
         Instant currentDate = dateOfPost.toInstant();
-        List<BlogPost> allPosts = blogPostRepository.findAll().parallelStream()
+        List<BlogPost> allPosts = getAllBlogPosts().parallelStream()
                 .filter(blog -> blog.getDateCreated().compareTo(currentDate) == 0)
+                .sorted()
                 .collect(Collectors.toList());
         return allPosts;
     }
 
     public List<BlogPost> getBlogPostsBetweenDates(Date startDate, Date endDate) {
         Instant start = startDate.toInstant();
-        Instant end = endDate.toInstant();
-        return blogPostRepository.findAll().parallelStream()
+        Instant end = endDate.toInstant().plusSeconds(24*60*60);
+        return getAllBlogPosts().parallelStream()
                 .filter(blog -> blog.getDateCreated().isAfter(start))
                 .filter(blog -> blog.getDateCreated().isBefore(end))
+                .sorted()
                 .collect(Collectors.toList());
     }
 
     public List<BlogPost> getAllBlogPostsByAuthorAndDate(Author author, Date startDate) {
         Instant currentDate = startDate.toInstant();
-        return blogPostRepository.findAll().parallelStream()
+        return getAllBlogPosts().parallelStream()
                 .filter(post -> post.getAuthor().equals(author))
                 .filter(blog -> blog.getDateCreated().compareTo(currentDate) == 0)
+                .sorted()
                 .collect(Collectors.toList());
     }
 
     public List<BlogPost> getAllBlogPostsByAuthorAndDate(Author author, Date startDate, Date endDate) {
         Instant start = startDate.toInstant();
-        Instant end = startDate.toInstant();
-        return blogPostRepository.findAll().parallelStream()
+        Instant end = startDate.toInstant().plusSeconds(24*3600);
+        return getAllBlogPosts().parallelStream()
                 .filter(post -> post.getAuthor().equals(author))
                 .filter(blog -> blog.getDateCreated().isAfter(start))
                 .filter(blog -> blog.getDateCreated().isBefore(end))
+                .sorted()
                 .collect(Collectors.toList());
     }
 
-    /*
+
     @Transactional
     public void updateBlogContent(BlogPost blogPost) {
-        BlogPost bgPost = blogPostRepository.getBlogPostByTitle(blogPost.getTitle());
+        BlogPost bgPost = getBlogPostByTitle(blogPost.getTitle())
+                            .stream()
+                            .filter(author -> blogPost.getAuthor().equals(author))
+                            .findFirst()
+                            .get();
         if (bgPost != null) {
             bgPost.setContent(blogPost.getContent());
-            bgPost.setAuthors(blogPost.getAuthors());
+            bgPost.setAuthor(blogPost.getAuthor());
             bgPost.setComments(blogPost.getComments());
             blogPostRepository.save(bgPost);
         }
     }
 
     public void deleteABlogPost(String title) {
-        blogPostRepository.deleteBlogPostByTitle(title);
-    }*/
+        BlogPost post = getBlogPostByTitle(title).stream().findAny().orElse(null);
+        if(post != null) {
+            blogPostRepository.delete(post);
+        }
+    }
 }
