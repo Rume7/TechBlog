@@ -37,7 +37,7 @@ public class BlogControllerAPI {
 
     @GetMapping(value = "/posts", produces = "application/json")
     public BlogPost getPost(@RequestParam String title, Model model) {
-        logger.info("Request to Get a blog post titled: " + title);
+        logger.info("Request to Get the blog post titled: " + title);
         final BlogPost blogPost = blogPostService.getBlogPostByTitle(title);
         return blogPost == null ? null : blogPost;
     }
@@ -49,8 +49,9 @@ public class BlogControllerAPI {
         return blogPostService.getBlogPostByTitle(post.getTitle());
     }
 
-    @DeleteMapping(value = "/posts/delete/")
+    @DeleteMapping(value = "/posts/delete")
     public boolean deletePost(@RequestParam String title) {
+        logger.info("Request to DELETE the blog post titled: " + title);
         BlogPost retrievedPost = blogPostService.getBlogPostByTitle(title);
         if (retrievedPost != null) {
             blogPostService.deleteABlogPost(retrievedPost.getTitle());
