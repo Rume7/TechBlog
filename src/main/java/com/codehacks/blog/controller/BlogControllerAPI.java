@@ -5,6 +5,7 @@ import com.codehacks.blog.services.BlogPostService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,14 +20,18 @@ public class BlogControllerAPI {
     @Autowired
     private BlogPostService blogPostService;
 
-    // TODO: Implemented CRUD methods
-    // TODO DONE:  READ,
+    @Transactional
+    @PostMapping(value = "/post", consumes = "application/json", produces = "application/json")
+    public String createPost(@RequestBody BlogPost post) {
+        logger.info("Request to CREATE blog post titled: " + post.getTitle());
+        blogPostService.createABlogPost(post);
+        return "Successful";
+    }
 
     @GetMapping(value = "/all_posts", produces = "application/json")
     public List<BlogPost> getAllBlogPost() {
         logger.info("Request to Get all Blog posts");
         List<BlogPost> allPosts = blogPostService.getAllBlogPosts();
-        //model.addAttribute("allPosts", allPosts);
         return blogPostService.getAllBlogPosts();
     }
 
@@ -37,10 +42,20 @@ public class BlogControllerAPI {
         return blogPost == null ? null : blogPost;
     }
 
-    @PutMapping
+    @PutMapping(value = "/posts/update", produces = "application/json")
     public BlogPost updatePost(@RequestBody BlogPost post) {
         logger.info("Request to UPDATE a blog post titled: " + post.getTitle());
         blogPostService.updateBlogContent(post);
         return blogPostService.getBlogPostByTitle(post.getTitle());
+    }
+
+    @DeleteMapping(value = "/posts/delete/")
+    public boolean deletePost(@RequestParam String title) {
+        BlogPost retrievedPost = blogPostService.getBlogPostByTitle(title);
+        if (retrievedPost != null) {
+            blogPostService.deleteABlogPost(retrievedPost.getTitle());
+            return true;
+        }
+        return false;
     }
 }
