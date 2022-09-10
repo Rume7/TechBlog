@@ -103,8 +103,6 @@ public class BlogPostService {
         BlogPost bgPost = getBlogPostByTitle(blogPost.getTitle());
         if (bgPost != null) {
             bgPost.setContent(blogPost.getContent());
-            bgPost.setAuthor(blogPost.getAuthor());
-            bgPost.setComments(blogPost.getComments());
             blogPostRepository.save(bgPost);
         }
     }
