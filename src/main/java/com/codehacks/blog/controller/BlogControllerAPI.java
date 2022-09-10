@@ -30,14 +30,14 @@ public class BlogControllerAPI {
 
     @GetMapping(value = "/all_posts", produces = "application/json")
     public List<BlogPost> getAllBlogPost() {
-        logger.info("Request to Get all Blog posts");
         List<BlogPost> allPosts = blogPostService.getAllBlogPosts();
-        return blogPostService.getAllBlogPosts();
+        logger.info("Request to GET all Blog posts. # of post = " + allPosts.size());
+        return allPosts;
     }
 
-    @GetMapping(value = "/posts", produces = "application/json")
-    public BlogPost getPost(@RequestParam String title, Model model) {
-        logger.info("Request to Get the blog post titled: " + title);
+    @GetMapping(value = "/posts/{title}", produces = "application/json")
+    public BlogPost getPost(@PathVariable String title, Model model) {
+        logger.info("Request to GET blog post titled: " + title);
         final BlogPost blogPost = blogPostService.getBlogPostByTitle(title);
         return blogPost == null ? null : blogPost;
     }
@@ -49,8 +49,8 @@ public class BlogControllerAPI {
         return blogPostService.getBlogPostByTitle(post.getTitle());
     }
 
-    @DeleteMapping(value = "/posts/delete")
-    public boolean deletePost(@RequestParam String title) {
+    @DeleteMapping(value = "/posts/delete/{title}")
+    public boolean deletePost(@PathVariable String title) {
         logger.info("Request to DELETE the blog post titled: " + title);
         BlogPost retrievedPost = blogPostService.getBlogPostByTitle(title);
         if (retrievedPost != null) {
