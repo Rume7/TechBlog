@@ -1,11 +1,31 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
     <head>
-        <meta charset="UTF-8">
-        <title>Title</title>
+        <meta charset="UTF-8" />
+        <meta http-equiv="x-ua-compatible" content="IE-edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/3.4.1/css/bootstrap.min.css}">
+        <title>Your Java blog</title>
     </head>
     <body>
         <header>Welcome to a rhume blog</header>
         <hr />
+
+        <p th:text="|Happy ${today}|">Today</p>
+
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Author</th>
+                    <th>Post</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="post: ${blogPosts}" th:class="${item.complete} ? success : warning">
+                    <td th:text="${post}">Author_name</td>
+                    <td>Author_post</td>
+                </tr>
+            </tbody>
+        </table>
     </body>
 </html>
