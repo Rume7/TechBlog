@@ -21,9 +21,10 @@
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="post: ${blogPosts}" th:class="${item.complete} ? success : warning">
-                    <td th:text="${post}">Author_name</td>
-                    <td>Author_post</td>
+                <tr th:each="post: ${blogPosts}">
+                    <td th:text="${post.title}">Blog_title</td>
+                    <td th:text="${post.content}">Blog_content</td>
+                    <td th:text="${post.dateCreated}">Date_published</td>
                 </tr>
             </tbody>
         </table>
