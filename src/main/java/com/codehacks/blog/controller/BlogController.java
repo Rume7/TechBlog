@@ -28,4 +28,11 @@ public class BlogController {
                 .toLocalDate().getDayOfWeek());
         return modelAndView;
     }
+
+    @GetMapping(value = "/register")
+    public ModelAndView loginToBlog() {
+        logger.info("login page ");
+        ModelAndView modelAndView = new ModelAndView("register");
+        return modelAndView;
+    }
 }
